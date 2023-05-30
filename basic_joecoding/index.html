@@ -7,19 +7,24 @@
     <title>Document</title>
   </head>
   <body>
-    <h1 id="sound"></h1>
+    <p>dog, cat만 입력 가능하다.. 경고임 🤨</p>
     <input type="text" id="name" />
-    <button onclick="getSound()" type="button">API 요청 버튼</button>
+    <button type="button">API 요청 버튼</button>
+    <h1 id="sound"></h1>
+    <img id="img" src="" alt="이미지" style="width: 350px; display: block" />
 
     <script>
+      const $button = document.querySelector("button");
+      $button.addEventListener("click", getSound);
       function getSound() {
         const name = document.getElementById("name").value;
         fetch(`http://localhost:3000/sound/${name}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            const { sound } = data;
-            document.getElementById("sound").innerHTML = sound;
+            const { sound, error, img } = data;
+            document.getElementById("sound").innerHTML = sound ? sound : error;
+            document.getElementById("img").setAttribute("src", img);
           });
       }
     </script>
